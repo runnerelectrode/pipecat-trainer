@@ -7,7 +7,7 @@ name = "pipecat-trainer"
 version = "0.1.0"
 description = "Make any Pipecat bot trainable: an LLM slot keyed by session, a trace observer, and Pipecat Evals as the rollout sandbox."
 readme = "README.md"
-license = "BSD-2-Clause"
+license = { text = "BSD-2-Clause" }
 requires-python = ">=3.11"
 keywords = ["pipecat", "voice-ai", "rl", "fine-tuning", "evals"]
 dependencies = [
@@ -29,6 +29,9 @@ pipecat-trainer = "pipecat_trainer.cli:main"
 [project.urls]
 Homepage = "https://github.com/runnerelectrode/pipecat-trainer"
 Issues = "https://github.com/runnerelectrode/pipecat-trainer/issues"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pipecat_trainer"]
