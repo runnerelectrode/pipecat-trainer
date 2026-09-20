@@ -88,3 +88,14 @@ def traces(traces_dir):
                            f"user: {(user[-1]['content'] if user else '')[:50]!r:54s} bot: {r.get('reply', '')[:60]!r}")
             else:
                 click.echo(f"{p.stem[:8]} end  reason={r.get('end_reason')}")
+
+
+@main.command("dashboard")
+@click.option("--traces", "traces_dir", default="traces", show_default=True, type=click.Path())
+@click.option("--results", default=None, type=click.Path(), help="A rollout results.jsonl to show alongside.")
+@click.option("--port", default=7870, show_default=True)
+def dashboard(traces_dir, results, port):
+    """A local page: live call traces on the left, judged rollouts on the right."""
+    from pipecat_trainer.dashboard import serve
+
+    serve(Path(traces_dir), Path(results) if results else None, port)
