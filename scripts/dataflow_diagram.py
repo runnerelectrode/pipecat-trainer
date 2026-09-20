@@ -61,5 +61,5 @@ arrow([(199, 270), (199, 202)], "next day's calls run on the winner (recursive)"
 text(24, 424, "Simplest reading: Pipecat is the agent and the eval harness. This package is the two lines that capture calls and the driver that turns evals into", 11)
 text(24, 440, "rollouts. Everything below the line is a standard training stack: a token-in/token-out proxy, a trainer that supports OPSD/GRPO/SFT, and a gate.", 11)
 out.append("</svg>")
-Path(__file__).resolve().parents[1].joinpath("docs", "dataflow.svg").write_text("\n".join(out))
+Path(__file__).resolve().parents[1].joinpath("docs", "loop-by-category.svg").write_text("\n".join(out))
 print("wrote docs/loop-by-category.svg")
