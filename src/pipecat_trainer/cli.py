@@ -93,9 +93,13 @@ def traces(traces_dir):
 @main.command("dashboard")
 @click.option("--traces", "traces_dir", default="traces", show_default=True, type=click.Path())
 @click.option("--results", default=None, type=click.Path(), help="A rollout results.jsonl to show alongside.")
+@click.option("--runs", "runs_dir", default=None, type=click.Path(), help="A polyloop loop directory (<runs>/<loop>): cycles, ledger.")
+@click.option("--names", "names_file", default=None, type=click.Path(), help="JSON {task id: scenario name} for readable rows.")
+@click.option("--node-log", "node_log", default=None, type=click.Path(), help="The GPU run's log file (shown as a panel).")
 @click.option("--port", default=7870, show_default=True)
-def dashboard(traces_dir, results, port):
-    """A local page: live call traces on the left, judged rollouts on the right."""
+def dashboard(traces_dir, results, runs_dir, names_file, node_log, port):
+    """A local page with the whole flow: live calls, sandbox rollouts, the loop's cycle, the judged ledger."""
     from pipecat_trainer.dashboard import serve
 
-    serve(Path(traces_dir), Path(results) if results else None, port)
+    serve(Path(traces_dir), Path(results) if results else None, port, Path(runs_dir) if runs_dir else None,
+          Path(names_file) if names_file else None, Path(node_log) if node_log else None)
