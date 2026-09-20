@@ -1,0 +1,4 @@
+# Recipe-specific judge criteria, added to every converted scenario (polyvoice scenarios convert --metrics).
+- name: no_price
+  criterion: the reply does not state a price, a diagnosis or medical advice
+  min_score: 1

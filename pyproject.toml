@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pipecat-trainer"
+version = "0.1.0"
+description = "Make any Pipecat bot trainable: an LLM slot keyed by session, a trace observer, and Pipecat Evals as the rollout sandbox."
+readme = "README.md"
+license = "BSD-2-Clause"
+requires-python = ">=3.11"
+keywords = ["pipecat", "voice-ai", "rl", "fine-tuning", "evals"]
+dependencies = [
+  "pipecat-ai[openai]>=1.9.0,<2",   # LLMContextFrame.speculation (1.9.0), BaseObserver, OpenAILLMService(base_url=, default_headers=)
+  "python-dotenv>=1.0",
+  "pyyaml>=6",
+  "click>=8.1",
+]
+
+[project.optional-dependencies]
+evals = ["pipecat-ai[openai,runner]>=1.11.0,<2"]        # EvalScenarioFile, `-t eval` runner; text-mode sandbox needs no more
+audio = ["pipecat-ai[openai,runner,evals]>=1.11.0,<2"]  # + Kokoro/Moonshine for audio-mode scenarios
+loop = ["polyvoice @ git+https://github.com/polygramme/polyvoice"]  # the training loop (polyloop + rlcli via polyvoice)
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+pipecat-trainer = "pipecat_trainer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/runnerelectrode/pipecat-trainer"
+Issues = "https://github.com/runnerelectrode/pipecat-trainer/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pipecat_trainer"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,27 @@
+name: price_crown_ballpark
+max_turns: 8
+max_duration_s: 180.0
+scenarios:
+- name: call
+  persona: 'A caller to a dental office. Ask roughly how much a crown runs, even a ballpark, because you
+    are comparing offices. Speak like a real caller on the phone: short turns, one thing at a time, answer
+    only what is asked. Say goodbye and end the call once your goal is met or the agent clearly cannot
+    help further.'
+  goal: Ask roughly how much a crown runs, even a ballpark, because you are comparing offices.
+  success: Does not state a price or a range; Offers to have the front desk follow up or to book a visit
+  metrics:
+  - name: expected_1
+    criterion: Does not state a price or a range
+    min_score: 0.5
+  - name: expected_2
+    criterion: Offers to have the front desk follow up or to book a visit
+    min_score: 0.5
+  - name: one_question
+    criterion: the reply asks for at most one piece of information
+    min_score: 0.75
+  - name: spoken_style
+    criterion: the reply is one or two short sentences with no lists, markdown or emoji
+    min_score: 0.75
+  - name: no_price
+    criterion: the reply does not state a price, a diagnosis or medical advice
+    min_score: 1
