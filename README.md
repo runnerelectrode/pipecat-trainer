@@ -2,11 +2,15 @@
 
 Make any Pipecat bot trainable. Two lines in your bot capture every call as training data and let a
 trained adapter answer without a restart; Pipecat's own eval scenarios become the rollout sandbox; a loop
-trains a LoRA on the bot's LLM from its own calls, gates it on a held-out set, and promotes it.
+trains a LoRA on the bot's LLM from its own calls, gates it on a held-out set, and promotes it. Training is
+on-policy self-distillation (OPSD) by default, and GRPO, SFT and the other algorithms
+[SkyRL](https://github.com/NovaSky-AI/SkyRL) supports, through [rlcli](https://github.com/polygramme/rlcli).
+
+![architecture](docs/architecture.svg)
 
 The training loop is [polyloop](https://github.com/runnerelectrode/polyloop-rl) (cycle, gate, receipts) on
-[rlcli](https://github.com/polygramme/rlcli) (training and serving); [polyvoice](https://github.com/polygramme/polyvoice)
-wires this package's outputs into it. This repo is the Pipecat-facing half and depends only on `pipecat-ai`.
+rlcli (training and serving); [polyvoice](https://github.com/polygramme/polyvoice) wires this package's
+outputs into it. This repo is the Pipecat-facing half and depends only on `pipecat-ai`.
 
 Starts from [pipecat-ai/phonellm-alpha-1](https://huggingface.co/pipecat-ai/phonellm-alpha-1) by default;
 bot layout follows [pipecat-examples/phonellm](https://github.com/pipecat-ai/pipecat-examples/tree/main/phonellm).
@@ -108,18 +112,7 @@ interval and a per-scenario regression count. The receipt is a file; commit it.
 
 ## How the architecture works
 
-```
-                          daytime                                       nighttime
-browser / phone ─► Pipecat bot ─────────────────────────┐        scenarios (pool)      scenarios (holdout, frozen)
-   STT → Smart Turn → [LLM slot] → TTS                  │                │                       │
-                        │   ▲                           │   pipecat-trainer rollout        gate: candidate vs incumbent
-      PolyvoiceObserver │   │ X-Session-Id, X-Turn-Type │   one bot per call, -t eval      paired, bootstrap CI
-      traces/*.jsonl    │   │                           │   caller + judge = any endpoint
-                        ▼   │                           ▼                │                       ▲
-                    polyloop proxy  ◄── serve(policy) ── polyloop cycle ──┴── OPSD on captured sessions + hints
-                        │                                    (filter → train → gate → propose → promote)
-                    rlcli serve: base model + LoRA slots (GPU node)
-```
+The diagram at the top; the pieces in words:
 
 **The LLM slot.** Every OpenAI-compatible LLM vendor in Pipecat subclasses one service that takes a base URL
 and headers, so the trained model plugs in wherever those do. Anthropic, Gemini and Bedrock use native SDKs
