@@ -1,0 +1,115 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1180' height='700' viewBox='0 0 1180 700'>
+<defs><marker id='a' markerWidth='10' markerHeight='10' refX='9' refY='5' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='#1f2933'/></marker></defs>
+<rect width='1180' height='700' fill='white'/>
+<text x='24' y='34' font-family='Helvetica, Arial, sans-serif' font-size='20' font-weight='700' fill='#1f2933' text-anchor='start'>Data flow: from a call to a promoted adapter, and who owns each step</text>
+<rect x='24' y='46' width='14' height='14' rx='3' fill='#e8f1fb' stroke='#9aa5b1'/>
+<text x='44' y='57' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Pipecat, as-is</text>
+<rect x='166' y='46' width='14' height='14' rx='3' fill='#fff4d6' stroke='#9aa5b1'/>
+<text x='186' y='57' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>pipecat-trainer</text>
+<rect x='315' y='46' width='14' height='14' rx='3' fill='#fde8e8' stroke='#9aa5b1'/>
+<text x='335' y='57' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>verifier (judged calls)</text>
+<rect x='520' y='46' width='14' height='14' rx='3' fill='#f3eefc' stroke='#9aa5b1'/>
+<text x='540' y='57' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>polyloop (the loop)</text>
+<rect x='697' y='46' width='14' height='14' rx='3' fill='#e9f7ef' stroke='#9aa5b1'/>
+<text x='717' y='57' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>rlcli on SkyRL (train / serve)</text>
+<rect x='24' y='84' width='250' height='92' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='36' y='105' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>1 · The call</text>
+<text x='36' y='124' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Gradium STT → Smart Turn → LLM → Gradium TTS</text>
+<text x='36' y='139' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>WebRTC / Daily / Pipecat Cloud</text>
+<text x='36' y='154' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>your pipeline, unchanged</text>
+<text x='264' y='100' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>PIPECAT</text>
+<rect x='314' y='84' width='270' height='92' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='326' y='105' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>2a · LLM slot  (TITO capture)</text>
+<text x='326' y='124' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>OpenAILLMService subclass</text>
+<text x='326' y='139' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>X-Session-Id · X-Turn-Type · whole turns</text>
+<text x='326' y='154' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>→ every request goes through the proxy</text>
+<text x='574' y='100' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>PIPECAT-TRAINER</text>
+<rect x='624' y='84' width='250' height='92' rx='10' fill='#f3eefc' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='636' y='105' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>3 · polyloop proxy  (TITO)</text>
+<text x='636' y='124' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>token-in / token-out: renders the messages,</text>
+<text x='636' y='139' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>samples from rlcli, records prompt tokens +</text>
+<text x='636' y='154' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>reply per turn, keyed by session</text>
+<text x='864' y='100' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>POLYLOOP</text>
+<rect x='914' y='84' width='242' height='92' rx='10' fill='#e9f7ef' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='926' y='105' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>4 · rlcli serve</text>
+<text x='926' y='124' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>SkyRL Tinker server</text>
+<text x='926' y='139' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>PhoneLLM + LoRA slots</text>
+<text x='926' y='154' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>sampler answers the call</text>
+<text x='1146' y='100' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>RLCLI</text>
+<polyline points='274,130 314,130' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<polyline points='584,130 624,130' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='604' y='120' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>chat completions</text>
+<polyline points='874,130 914,130' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='894' y='120' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>sample</text>
+<rect x='314' y='200' width='270' height='78' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='326' y='221' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>2b · Observer  (text capture)</text>
+<text x='326' y='240' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>BaseObserver subclass, inside the bot</text>
+<text x='326' y='255' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>context · reply · tool results · interrupted ·</text>
+<text x='326' y='270' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>TTFB · end reason  →  traces/*.jsonl</text>
+<text x='574' y='216' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>PIPECAT-TRAINER</text>
+<polyline points='150,176 150,239 314,239' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='232' y='232' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>every frame</text>
+<text x='24' y='300' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Two capture channels, same session id. The proxy's file is token-exact and is what training uses;</text>
+<text x='24' y='316' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>the observer's file is text-level, carries interruptions/tools/latency, and works for bots not behind the proxy.</text>
+<rect x='24' y='350' width='250' height='92' rx='10' fill='#f3eefc' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='36' y='371' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>5 · Trace import</text>
+<text x='36' y='390' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>polyloop reads the proxy traces:</text>
+<text x='36' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>sessions grouped by X-Session-Id,</text>
+<text x='36' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>held-out sessions excluded, speculative dropped</text>
+<text x='264' y='366' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>POLYLOOP</text>
+<rect x='314' y='350' width='270' height='92' rx='10' fill='#fde8e8' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='326' y='371' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>6 · Sandbox + evals  = the verifier</text>
+<text x='326' y='390' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Pipecat Evals: -t eval, scenario YAML, persona,</text>
+<text x='326' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>judge; one bot per call (pipecat-trainer rollout)</text>
+<text x='326' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>or Coval: persona + metrics via API</text>
+<text x='574' y='366' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>PIPECAT EVALS / COVAL</text>
+<rect x='624' y='350' width='250' height='92' rx='10' fill='#f3eefc' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='636' y='371' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>7 · Ledger</text>
+<text x='636' y='390' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>one judged conversation per row:</text>
+<text x='636' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>session · task · reward · judge's explanation</text>
+<text x='636' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>(polyvoice core; vendor-agnostic)</text>
+<text x='864' y='366' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>POLYVOICE</text>
+<rect x='914' y='350' width='242' height='92' rx='10' fill='#f3eefc' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='926' y='371' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>8 · Rows</text>
+<text x='926' y='390' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>prompt (token-exact, from 3)</text>
+<text x='926' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>+ hint (explanation, from 7)</text>
+<text x='926' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>joined by session id</text>
+<text x='1146' y='366' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>POLYLOOP</text>
+<polyline points='150,176 150,350' fill='none' stroke='#1f2933' stroke-width='1.4' stroke-dasharray='5 4' marker-end='url(#a)'/>
+<polyline points='274,396 314,396' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='294' y='386' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>scenarios × K</text>
+<polyline points='584,396 624,396' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='604' y='386' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>reward + reasons</text>
+<polyline points='874,396 914,396' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<polyline points='749,176 749,350' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='760' y='270' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='start'>the bot's replies in every simulated call come from the model being trained</text>
+<rect x='24' y='500' width='330' height='100' rx='10' fill='#e9f7ef' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='36' y='521' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>9 · OPSD trainer</text>
+<text x='36' y='540' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>student = PhoneLLM + LoRA samples fresh replies to the prompt</text>
+<text x='36' y='555' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>teacher = same weights with the hint in context scores them</text>
+<text x='36' y='570' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>loss closes the gap, KL penalty; GRPO / SFT also available</text>
+<text x='344' y='516' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>RLCLI ON SKYRL</text>
+<rect x='394' y='500' width='330' height='100' rx='10' fill='#fde8e8' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='406' y='521' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>10 · Gate  (the verifier again)</text>
+<text x='406' y='540' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>frozen holdout scenarios, candidate vs incumbent,</text>
+<text x='406' y='555' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>K repeats, paired per scenario, bootstrap CI,</text>
+<text x='406' y='570' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>regression cap → receipt.json → promote or reject</text>
+<text x='714' y='516' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>PIPECAT EVALS / COVAL</text>
+<rect x='764' y='500' width='392' height='100' rx='10' fill='#f3eefc' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='776' y='521' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>11 · Promote</text>
+<text x='776' y='540' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>polyloop approve → live.json → proxy serves the new adapter</text>
+<text x='776' y='555' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>the bot changes nothing; tomorrow's calls are captured under it</text>
+<text x='776' y='570' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>and train the next candidate (recursive)</text>
+<text x='1146' y='516' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='700' fill='#8a94a6' text-anchor='end'>POLYLOOP</text>
+<polyline points='1035,442 1035,470 189,470 189,500' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='620' y='462' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>rows</text>
+<polyline points='354,550 394,550' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='374' y='540' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>candidate adapter</text>
+<polyline points='724,550 764,550' fill='none' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='744' y='540' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>receipt: pass</text>
+<polyline points='960,600 960,640 1140,640 1140,130 1156,130' fill='none' stroke='#1f2933' stroke-width='1.4' stroke-dasharray='5 4' marker-end='url(#a)'/>
+<text x='1000' y='656' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='start'>promoted adapter answers the next call →</text>
+<text x='24' y='640' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Where Pipecat is used: 1 (the bot), 2a (its LLM service class), 2b (its observer API), 6 and 10 (its eval harness as the sandbox and, optionally, the gate).</text>
+<text x='24' y='658' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Where the verifier sits: 6 (rollouts for training signal) and 10 (the gate). Coval and Pipecat Evals are interchangeable behind the same loop file.</text>
+<text x='24' y='676' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Where TITO is: 3, the proxy; that file is the only source of training tokens. Where OPSD is: 9, rlcli's trainer on the SkyRL server.</text>
+</svg>
