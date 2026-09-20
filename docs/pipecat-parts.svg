@@ -1,0 +1,63 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1180' height='600' viewBox='0 0 1180 600'>
+<defs><marker id='a' markerWidth='10' markerHeight='10' refX='9' refY='5' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='#1f2933'/></marker></defs>
+<rect width='1180' height='600' fill='white'/>
+<text x='24' y='34' font-family='Helvetica, Arial, sans-serif' font-size='20' font-weight='700' fill='#1f2933' text-anchor='start'>Which parts of Pipecat are used, and what pipecat-trainer adds on each</text>
+<text x='24' y='54' font-family='Helvetica, Arial, sans-serif' font-size='12' font-weight='400' fill='#52606d' text-anchor='start'>blue = Pipecat, used as-is (nothing forked, nothing patched) · yellow = pipecat-trainer, the part that learns</text>
+<rect x='24' y='72' width='500' height='500' rx='12' fill='#f7f8fa' stroke='#9aa5b1' stroke-width='1' stroke-dasharray='6 4'/>
+<text x='36' y='90' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='700' fill='#8a94a6' text-anchor='start'>PIPECAT  ·  used as-is</text>
+<rect x='656' y='72' width='500' height='500' rx='12' fill='#f7f8fa' stroke='#9aa5b1' stroke-width='1' stroke-dasharray='6 4'/>
+<text x='668' y='90' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='700' fill='#8a94a6' text-anchor='start'>PIPECAT-TRAINER  ·  what is added</text>
+<rect x='36' y='104' width='476' height='72' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='48' y='126' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>The bot pipeline</text>
+<text x='48' y='145' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Gradium STT · Smart Turn · Silero VAD · Gradium TTS</text>
+<text x='48' y='160' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>SmallWebRTC / Daily / Pipecat Cloud transports</text>
+<text x='48' y='175' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>context aggregators · PipelineWorker · Flows · tools</text>
+<rect x='668' y='104' width='476' height='72' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='680' y='126' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>Your bot stays your bot</text>
+<text x='680' y='145' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>two lines change: the LLM constructor and one observer</text>
+<text x='680' y='160' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>everything upstream and downstream of the LLM is untouched</text>
+<line x1='512' y1='140.0' x2='668' y2='140.0' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='590.0' y='134.0' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>unchanged</text>
+<rect x='36' y='188' width='476' height='84' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='48' y='210' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>OpenAILLMService</text>
+<text x='48' y='229' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>the base class every hosted LLM vendor subclasses</text>
+<text x='48' y='244' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>takes base_url + headers + settings</text>
+<rect x='668' y='188' width='476' height='84' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='680' y='210' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>The LLM slot that learns</text>
+<text x='680' y='229' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>X-Session-Id + X-Turn-Type on every request (speculative turns never train)</text>
+<text x='680' y='244' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>whole turns so the proxy records token-exact; answers from the promoted adapter</text>
+<text x='680' y='259' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>promotion flips behind the URL: the bot never restarts</text>
+<line x1='512' y1='230.0' x2='668' y2='230.0' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='590.0' y='224.0' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>subclassed</text>
+<rect x='36' y='284' width='476' height='68' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='48' y='306' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>BaseObserver</text>
+<text x='48' y='325' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>watch every frame without touching the pipeline</text>
+<text x='48' y='340' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>(Roark uses it for call analytics)</text>
+<rect x='668' y='284' width='476' height='68' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='680' y='306' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>The observer that writes training rows</text>
+<text x='680' y='325' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>exact context the model saw · reply · tool calls + results</text>
+<text x='680' y='340' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>interrupted · TTFB · usage · end reason, keyed by session</text>
+<line x1='512' y1='318.0' x2='668' y2='318.0' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='590.0' y='312.0' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>implemented</text>
+<rect x='36' y='364' width='476' height='84' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='48' y='386' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>Pipecat Evals</text>
+<text x='48' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>-t eval transport · scenario YAML (persona, goal, metrics)</text>
+<text x='48' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>simulated caller · judge · one bot process per run</text>
+<text x='48' y='435' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>built for pass/fail regression tests before a deploy</text>
+<rect x='668' y='364' width='476' height='84' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='680' y='386' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>The rollout engine</text>
+<text x='680' y='405' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>K judged calls per scenario; the score is the reward</text>
+<text x='680' y='420' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>the judge's per-turn reasons are the hindsight hint for OPSD</text>
+<text x='680' y='435' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>scenario YAML is the single source: sandbox, Coval seed, frozen holdout</text>
+<line x1='512' y1='406.0' x2='668' y2='406.0' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='590.0' y='400.0' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>driven</text>
+<rect x='36' y='460' width='476' height='54' rx='10' fill='#e8f1fb' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='48' y='482' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>runner_args.session_id</text>
+<text x='48' y='501' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>per-call id on every transport; Pipecat Cloud sets it</text>
+<rect x='668' y='460' width='476' height='54' rx='10' fill='#fff4d6' stroke='#9aa5b1' stroke-width='1.2'/>
+<text x='680' y='482' font-family='Helvetica, Arial, sans-serif' font-size='13' font-weight='700' fill='#1f2933' text-anchor='start'>The join key</text>
+<text x='680' y='501' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>header → observer record → proxy trace → judged conversation → hint</text>
+<line x1='512' y1='487.0' x2='668' y2='487.0' stroke='#1f2933' stroke-width='1.4' marker-end='url(#a)'/>
+<text x='590.0' y='481.0' font-family='Helvetica, Arial, sans-serif' font-size='10' font-weight='400' fill='#52606d' text-anchor='middle'>reused</text>
+<text x='24' y='590' font-family='Helvetica, Arial, sans-serif' font-size='11' font-weight='400' fill='#52606d' text-anchor='start'>Not from Pipecat: the loop (polyloop: filter → train → gate → promote, receipts, recursion) and training/serving (rlcli on SkyRL: OPSD default; GRPO, SFT).</text>
+</svg>

@@ -20,6 +20,21 @@ Starts from [pipecat-ai/phonellm-alpha-1](https://huggingface.co/pipecat-ai/phon
 bot layout follows [pipecat-examples/phonellm](https://github.com/pipecat-ai/pipecat-examples/tree/main/phonellm).
 Tested with pipecat-ai 1.11.0 (compatible with `>=1.9.0,<2`).
 
+## Which parts of Pipecat, and what is added
+
+![which parts of Pipecat](docs/pipecat-parts.svg)
+
+| Pipecat, used as-is | How | pipecat-trainer adds |
+|---|---|---|
+| the bot pipeline: Gradium STT/TTS, Smart Turn, VAD, transports, aggregators, Flows, tools | unchanged | two lines: the LLM constructor and one observer |
+| `OpenAILLMService`, the base class every hosted LLM vendor subclasses | subclassed | the LLM slot: session and turn-type headers, whole turns for token-exact capture, answers from the promoted adapter |
+| `BaseObserver`, the frame-watching API | implemented | the observer that writes training rows (context, reply, tool calls, interruptions, latency, end reason) |
+| Pipecat Evals: eval transport, scenario YAML, simulated caller, judge | driven as a rollout engine | K judged calls per scenario; score = reward, the judge's reasons = the hint; scenarios are the single source for sandbox, Coval and holdout |
+| `runner_args.session_id` | reused | the join key from header to trace to judged conversation to hint |
+
+Nothing in Pipecat is forked or patched. The loop itself (filter, train, gate, promote, receipts, recursion)
+is polyloop, and training and serving are rlcli on SkyRL.
+
 ## Use it with Pipecat
 
 ### 1. Install
