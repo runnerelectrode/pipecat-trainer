@@ -1,4 +1,4 @@
-"""Render docs/dataflow.svg: six categories of the stack in a loop, with what Pipecat provides at each.
+"""Render docs/loop-by-category.svg: six categories of the stack in a loop, with what Pipecat provides at each.
 Run: python scripts/dataflow_diagram.py"""
 from __future__ import annotations
 
@@ -62,4 +62,4 @@ text(24, 424, "Simplest reading: Pipecat is the agent and the eval harness. This
 text(24, 440, "rollouts. Everything below the line is a standard training stack: a token-in/token-out proxy, a trainer that supports OPSD/GRPO/SFT, and a gate.", 11)
 out.append("</svg>")
 Path(__file__).resolve().parents[1].joinpath("docs", "dataflow.svg").write_text("\n".join(out))
-print("wrote docs/dataflow.svg")
+print("wrote docs/loop-by-category.svg")

@@ -37,7 +37,7 @@ is polyloop, and training and serving are rlcli on SkyRL.
 
 ## The loop, by category
 
-![the loop by category](docs/dataflow.svg)
+![the loop by category](docs/loop-by-category.svg)
 
 Six steps. The voice agent takes calls (Pipecat, unchanged). Capture records every LLM turn: a token-in /
 token-out proxy keeps the exact tokens per session, and an observer inside the bot keeps context, tools,
