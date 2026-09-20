@@ -1,10 +1,14 @@
 # pipecat-trainer
 
-Make any Pipecat bot trainable. Two lines in your bot capture every call as training data and let a
-trained adapter answer without a restart; Pipecat's own eval scenarios become the rollout sandbox; a loop
-trains a LoRA on the bot's LLM from its own calls, gates it on a held-out set, and promotes it. Training is
-on-policy self-distillation (OPSD) by default, and GRPO, SFT and the other algorithms
-[SkyRL](https://github.com/NovaSky-AI/SkyRL) supports, through [rlcli](https://github.com/polygramme/rlcli).
+Recursive self-improvement (RSI) for Pipecat voice bots. The bot takes calls; every call becomes training
+data; a loop trains the bot's LLM on those calls, gates the result on a held-out set, and promotes it; the
+promoted model takes the next day's calls, which train the next one. Each cycle starts from the last
+cycle's winner, so the bot improves from its own use, with a receipt at every step.
+
+Two lines in your bot capture every call and let a trained adapter answer without a restart; Pipecat's own
+eval scenarios become the rollout sandbox. Training is on-policy self-distillation (OPSD) by default, and
+GRPO, SFT and the other algorithms [SkyRL](https://github.com/NovaSky-AI/SkyRL) supports, through
+[rlcli](https://github.com/polygramme/rlcli).
 
 ![architecture](docs/architecture.svg)
 
@@ -139,6 +143,11 @@ no more than the allowed per-scenario regressions. Approval is a human step by d
 
 **Promotion never restarts the bot.** The adapter flips behind the proxy URL. On Pipecat Cloud the agent
 keeps calling the same URL, so no redeploy; only moving the proxy itself changes a secret.
+
+**Why it is recursive.** The promoted adapter is the incumbent of the next cycle: it answers the next day's
+calls, those calls are captured, the next candidate is trained from them and must beat it on the same
+frozen holdout. The loop only ever compares against its own last winner, and the gate is what stops a bad
+cycle from becoming the next base. Lineage and receipts make every step of that recursion auditable.
 
 **Where the tiers sit.**
 

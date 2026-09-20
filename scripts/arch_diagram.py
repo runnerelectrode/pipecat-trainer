@@ -36,8 +36,8 @@ out.append(f"<svg xmlns='http://www.w3.org/2000/svg' width='{W}' height='{H}' vi
 out.append("<defs><marker id='a' markerWidth='10' markerHeight='10' refX='9' refY='5' orient='auto'>"
            f"<path d='M0,0 L10,5 L0,10 z' fill='{INK}'/></marker></defs>")
 out.append(f"<rect width='{W}' height='{H}' fill='white'/>")
-text(24, 34, "pipecat-trainer: any Pipecat bot becomes a trainable system", 20, "700", INK)
-text(24, 54, "daytime: the bot takes calls and every turn is captured · nighttime: rollouts, training, a gate, and a promotion the bot never notices", 12)
+text(24, 34, "pipecat-trainer: recursive self-improvement for Pipecat bots", 20, "700", INK)
+text(24, 54, "daytime: the bot takes calls and every turn is captured · nighttime: rollouts, training, a gate, a promotion · the winner takes tomorrow's calls and trains the next one", 12)
 
 # lanes
 out.append(f"<rect x='24' y='72' width='548' height='236' rx='12' fill='{FILL['lane']}' stroke='{LINE}' stroke-width='1' stroke-dasharray='6 4'/>")
@@ -73,7 +73,7 @@ route([(210, 436), (210, 470)], "sample", lx=222, ly=458, anchor="start")
 route([(880, 436), (880, 470)], "train step / save adapter", lx=892, ly=458, anchor="start")
 
 text(24, 588, "Tiers: 0 Pipecat Evals text mode (free) · 1 audio mode (Kokoro, Moonshine) · 2 a simulation vendor as the gate · 3 production via observer or proxy", 11)
-text(24, 606, "Nothing in the bot changes between a training night and a promotion: the adapter flips behind the proxy URL.", 11)
+text(24, 606, "Recursive: each cycle starts from the last cycle's promoted adapter and must beat it on the same frozen holdout. Nothing in the bot changes; the adapter flips behind the proxy URL.", 11)
 out.append("</svg>")
 Path(__file__).resolve().parents[1].joinpath("docs").mkdir(exist_ok=True)
 Path(__file__).resolve().parents[1].joinpath("docs", "architecture.svg").write_text("\n".join(out))
