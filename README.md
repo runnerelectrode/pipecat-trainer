@@ -35,20 +35,22 @@ Tested with pipecat-ai 1.11.0 (compatible with `>=1.9.0,<2`).
 Nothing in Pipecat is forked or patched. The loop itself (filter, train, gate, promote, receipts, recursion)
 is polyloop, and training and serving are rlcli on SkyRL.
 
-## Data flow: trace capture → sandbox and evals → TITO → OPSD → gate → promote
+## The loop, by category
 
-![data flow](docs/dataflow.svg)
+![the loop by category](docs/dataflow.svg)
 
-Reading it left to right: the call runs on your Pipecat pipeline (1). Every LLM request goes through the
-trainer's LLM slot (2a) to the polyloop proxy (3), which is the token-in/token-out capture: it renders the
-messages, samples from rlcli (4), and records the prompt tokens and the reply per turn under the session id.
-The observer (2b) records the same turns as text inside the bot, with tool results, interruptions and latency.
-At night polyloop imports the traces (5), the verifier runs scenarios against the bot and judges them (6),
-the ledger keeps one row per judged call (7), and rows are built by joining each recorded turn to its judge
-explanation by session id (8). rlcli trains with OPSD (9): the student samples fresh replies, the teacher is
-the same weights with the hint in context, the loss closes the gap. The verifier runs again as the gate (10)
-on the frozen holdout, and a passing receipt promotes the adapter behind the proxy (11), where it answers
-tomorrow's calls and trains the next one.
+Six steps. The voice agent takes calls (Pipecat, unchanged). Capture records every LLM turn: a token-in /
+token-out proxy keeps the exact tokens per session, and an observer inside the bot keeps context, tools,
+interruptions and latency. The sandbox runs scenarios against the same bot with a simulated caller and a
+judge that explains each failure; that judged output is the verifier. The trainer turns recorded turns plus
+judge explanations into rows and trains on-policy (OPSD by default; GRPO and SFT are available). The gate
+replays a frozen holdout for candidate and incumbent and writes a receipt. Promote flips the adapter behind
+the endpoint; the bot restarts nothing, and tomorrow's calls train the next candidate.
+
+Pipecat provides the agent, the LLM service class and observer API the two lines attach to, and the eval
+harness that is both the sandbox and the gate. This package is the two lines and the rollout driver. The
+rest is a standard training stack and can be swapped: the reference setup uses polyloop as the proxy and
+loop and rlcli on SkyRL as the trainer.
 
 ## Use it with Pipecat
 
