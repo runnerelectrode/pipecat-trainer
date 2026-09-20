@@ -51,8 +51,8 @@ th{font-weight:600;color:var(--mute);font-size:12px}
 <div><h2>train · OPSD steps</h2><table><thead><tr><th>step</th><th class="num">reward</th><th class="num">teacher KL</th><th class="num">episodes</th><th>KL</th></tr></thead><tbody id="train"></tbody></table>
 <h2 style="margin-top:14px">gate · paired on the frozen holdout</h2><table><thead><tr><th>scenario</th><th class="num">incumbent</th><th class="num">candidate</th><th class="num">Δ</th></tr></thead><tbody id="paired"></tbody></table></div>
 </div></section>
-<section id="node" class="wide"><h2>5 · Node log · the GPU run (Modal)</h2><pre id="nodelog" class="mono" style="max-height:260px;overflow:auto;background:#f5f7fa;padding:10px;border-radius:8px;margin:0"></pre></section>
 <section id="sims" class="wide"><h2>4 · Simulation environment · every judged conversation in the ledger</h2><div id="simsum" class="dim"></div><table><thead><tr><th>when</th><th>stage</th><th>policy</th><th>scenario</th><th class="num">reward</th><th>judge's explanation (→ training hint)</th><th>session</th></tr></thead><tbody id="ledger"></tbody></table></section>
+<section id="node" class="wide"><h2>5 · Node log · the GPU run (Modal)</h2><pre id="nodelog" class="mono" style="max-height:260px;overflow:auto;background:#f5f7fa;padding:10px;border-radius:8px;margin:0"></pre></section>
 </main>
 <script>
 const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
